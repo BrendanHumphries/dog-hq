@@ -1,11 +1,24 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 
 import Post from './Post';
 import WelcomeHeader from './WelcomeHeader';
 
 function Home() {
+    const [profilePhoto, setProfilePhoto] = useState('');
+
+    useEffect(() => {
+        fetch('/dogs')
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(data);
+            setProfilePhoto(data.photo);
+        })
+    }, [])
+
     return (
         <div className='Home'>
+            <img src={`http://localhost:3000/${profilePhoto}`} alt='This is a test'/>
             <WelcomeHeader />
             <Grid
                 container

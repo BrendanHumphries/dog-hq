@@ -1,0 +1,2 @@
+class FavoriteBreedsController < ApplicationController
+end
