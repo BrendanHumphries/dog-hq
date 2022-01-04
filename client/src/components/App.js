@@ -14,6 +14,7 @@ function App() {
       if (resp.ok) {
         resp.json()
         .then(data => {
+          console.log(data);
           setCurrentUser(data);
         })
       } else {

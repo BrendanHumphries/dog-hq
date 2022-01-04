@@ -1,10 +1,12 @@
 import WelcomeHeader from "./WelcomeHeader";
 
-import { Box, Button, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import { Box, Button, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function SignUp() {
+function SignUp({currentUser, setCurrentUser}) {
+    let navigate = useNavigate();
     const [signupUserInfo, setSignupUserInfo] = useState({
         first_name: '',
         last_name: '',
@@ -16,11 +18,13 @@ function SignUp() {
     const [signupDogInfo, setSignupDogInfo] = useState({
         name: '',
         breed: '',
-        sex: '',
+        sex: 'male',
         age: 0,
         favorite_activity: '',
         favorite_food: ''
     })
+    const [userProfilePhoto, setUserProfilePhoto] = useState(null);
+    const [dogProfilePhoto, setDogProfilePhoto] = useState(null);
 
     function handleSignupUserInfo(event) {
         setSignupUserInfo({...signupUserInfo, [event.target.name]:event.target.value});
@@ -36,9 +40,50 @@ function SignUp() {
         }
     }
 
-    function handleSignup(event) {
+    function handleSignupSubmit(event) {
         event.preventDefault();
-        
+        const userFormData = new FormData();
+        userFormData.append('username', signupUserInfo.username);
+        userFormData.append('password', signupUserInfo.password);
+        userFormData.append('password_confirmation', signupUserInfo.password_confirmation);
+        userFormData.append('first_name', signupUserInfo.first_name);
+        userFormData.append('last_name', signupUserInfo.last_name);
+        userFormData.append('email', signupUserInfo.email);
+        userFormData.append('profile_photo', userProfilePhoto);
+        fetch('/users', {
+            method: 'POST',
+            body: userFormData
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            if (data.errors) {
+                console.log('Unprocessable entity!!! Please fix');
+                alert(`Something is invaild. Here are the errors: ${data.errors}`);
+            } else {
+                console.log('Sucessfully signed up, creating dog...');
+                setCurrentUser(data);
+                const dogFormData = new FormData();
+                dogFormData.append('user_id', data.id);
+                dogFormData.append('name', signupDogInfo.name);
+                dogFormData.append('breed', signupDogInfo.breed);
+                dogFormData.append('sex', signupDogInfo.sex);
+                dogFormData.append('age', signupDogInfo.age);
+                dogFormData.append('favorite_activity', signupDogInfo.favorite_activity);
+                dogFormData.append('favorite_food', signupDogInfo.favorite_food);
+                dogFormData.append('profile_photo', dogProfilePhoto);
+                fetch('/dogs', {
+                    method: 'POST',
+                    body: dogFormData
+                })
+                .then(resp => resp.json())
+                .then(data => {
+                    console.log(data);
+                    console.log('Sucessfully crreated dog, redirecting...');
+                    navigate('/dashboard');
+                });
+
+            }
+        })
     }
 
     console.log(signupDogInfo)
@@ -59,7 +104,7 @@ function SignUp() {
                     display='flex'
                     flexDirection='column'
                     component='form'
-                    onSubmit={handleSignup}
+                    onSubmit={handleSignupSubmit}
                 >
                     <Typography>Welcome to the future of dog social media!</Typography>
                     <Typography>First we need some info about you</Typography>
@@ -113,6 +158,11 @@ function SignUp() {
                         value={signupUserInfo.password_confirmation}
                         onChange={handleSignupUserInfo}
                     />
+                    <input
+                        type='file'
+                        accept='image/*'
+                        onChange={(event) => setUserProfilePhoto(event.target.files[0])}
+                    />
                     <Typography>Now we need some info about your dog! If you have multiple dogs, you will be able to add another from your profile page after signup</Typography>
                     <TextField
                         margin='normal'
@@ -130,7 +180,10 @@ function SignUp() {
                         value={signupDogInfo.breed}
                         onChange={handleSignupDogInfo}
                     />
+                    <InputLabel id='sex-label'>Sex</InputLabel>
                     <Select
+                        labelId="sex-label"
+                        id='sex'
                         margin='normal'
                         label='Sex'
                         required
@@ -165,6 +218,11 @@ function SignUp() {
                         name='favorite_food'
                         value={signupDogInfo.favorite_food}
                         onChange={handleSignupDogInfo}
+                    />
+                    <input
+                        type='file'
+                        accept='image/*'
+                        onChange={(event) => setDogProfilePhoto(event.target.files[0])}
                     />
                     <Button
                         type='submit'

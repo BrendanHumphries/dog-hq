@@ -1,8 +1,4 @@
 class DogsController < ApplicationController
-    # def index
-    #     render json: {photo: rails_blob_path(Dog.first.profile_photo)}
-    # end
-
     def index
         render json: Dog.all, status: :ok
     end
@@ -27,6 +23,6 @@ class DogsController < ApplicationController
     private
 
     def dog_params
-        params.permit(:user_id, :name, :breed, :sex, :age, :favorite_activity, :favorite_food)
+        params.permit(:user_id, :name, :breed, :sex, :age, :favorite_activity, :favorite_food, :profile_photo)
     end
 end
