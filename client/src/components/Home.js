@@ -1,26 +1,26 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Post from './Post';
-import WelcomeHeader from './WelcomeHeader';
 
-function Home({currentUser, setCurrentUser}) {
-    // const [profilePhoto, setProfilePhoto] = useState('');
+function Home({setUser}) {
+    let navigate = useNavigate();
 
-    // useEffect(() => {
-    //     fetch('/dogs')
-    //     .then(resp => resp.json())
-    //     .then(data => {
-    //         console.log(data);
-    //         setProfilePhoto(data.photo);
-    //     })
-    // }, [])
+    const [randomPost, setRandomPost] = useState();
 
     const [loginForm, setLoginForm] = useState({
         username: '',
         password: ''
     })
+
+    useEffect(() => {
+        fetch('/posts')
+        .then(resp => resp.json())
+        .then(data => {
+            setRandomPost(data[Math.floor(Math.random() * (data.length - 0 + 1)) + 0]);
+        })
+    }, [])
 
     function handleLoginFormChange(event) {
         setLoginForm({...loginForm, [event.target.name]:event.target.value});
@@ -38,92 +38,100 @@ function Home({currentUser, setCurrentUser}) {
         .then(resp => resp.json())
         .then(data => {
             if (data.error) {
-                console.log('Invalid username or password');
-                alert('Invalid username or password, please try again');
+                console.log(data);
+                alert(data.error);
                 setLoginForm({
                     username: '',
                     password: ''
-                })
+                });
             } else {
-                console.log('Successfully logged in');
-                setCurrentUser(data);
+                console.log(data);
+                setUser(data);
                 navigate('/dashboard');
             }
         });
     }
 
-    let navigate = useNavigate();
-
     return (
         <div className='Home'>
-            {/* <img src={`http://localhost:3000/${profilePhoto}`} alt='This is a test'/> */}
-            <WelcomeHeader />
-            {currentUser ?
-                navigate('/dashboard')
-                :
+            <Grid
+                container
+                direction='row'
+                justifyContent='space-evenly'
+                alignItems='center'
+                sx={{
+                    marginTop: 20
+                }}
+            >
                 <Grid
-                    container
-                    direction='row'
-                    justifyContent='space-evenly'
-                    alignItems='center'
-                    sx={{
-                        marginTop: 20
-                    }}
+                    item
                 >
-                    <Grid
-                        item
-                    >
-                        <Post />
-                    </Grid>
-                    <Grid
-                        item
-                        component={Paper}
-                        elevation={6}
-                    >
+                    <Box>
                         <Box
-                            textAlign='center'
-                            padding='20px'
-                            display='flex'
-                            flexDirection='column'
-                            component='form'
-                            onSubmit={handleLogin}
+                            component={Paper}
+                            elevation={6}
+                            sx={{
+                                bgcolor: '#abddff',
+                                borderRadius: '12px',
+                                padding: '10px',
+                                width: 400
+                            }}
+                            marginBottom={2}
                         >
-                            <Typography>Get back to it!</Typography>
-                            <TextField
-                                margin='normal'
-                                required
-                                label='Username'
-                                name='username'
-                                value={loginForm.username}
-                                onChange={handleLoginFormChange}
-                            />
-                            <TextField
-                                margin='normal'
-                                required
-                                label='Password'
-                                type='password'
-                                name='password'
-                                value={loginForm.password}
-                                onChange={handleLoginFormChange}
-                            />
-                            <Button
-                                type='submit'
-                                variant='contained'
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Log In
-                            </Button>
-                            <Typography>Or</Typography>
-                            <Button
-                                variant='contained'
-                                href='/signup/'
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Sign Up
-                            </Button>
+                            <Typography variant="h4">Featured Post:</Typography>
                         </Box>
-                    </Grid>
-                </Grid>}
+                        {randomPost ? <Post post={randomPost} /> : <Box component={Paper} elevation={6} sx={{bgcolor: '#abddff'}}><Typography variant="h4">Loading...</Typography></Box>}
+                    </Box>
+                </Grid>
+                <Grid
+                    item
+                    component={Paper}
+                    elevation={6}
+                >
+                    <Box
+                        textAlign='center'
+                        padding='20px'
+                        display='flex'
+                        flexDirection='column'
+                        component='form'
+                        onSubmit={handleLogin}
+                    >
+                        <Typography>Get back to it!</Typography>
+                        <TextField
+                            margin='normal'
+                            required
+                            label='Username'
+                            name='username'
+                            value={loginForm.username}
+                            onChange={handleLoginFormChange}
+                        />
+                        <TextField
+                            margin='normal'
+                            required
+                            label='Password'
+                            type='password'
+                            name='password'
+                            value={loginForm.password}
+                            onChange={handleLoginFormChange}
+                        />
+                        <Button
+                            type='submit'
+                            variant='contained'
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Log In
+                        </Button>
+                        <Typography>Or</Typography>
+                        <Button
+                            variant='contained'
+                            href='/signup/'
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Sign Up
+                        </Button>
+                    </Box>
+                </Grid>
+            </Grid>
         </div>
     )
 }

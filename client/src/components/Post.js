@@ -1,12 +1,12 @@
-import { Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-import Juliette from '../data/Juliette Sample.JPG'
-
-function Post() {
+function Post({post, dog}) {
     return (
         <div className="Post">
             <Box
+                component={Paper}
+                elevation={6}
                 sx={{
                     bgcolor: '#abddff',
                     borderRadius: '12px',
@@ -14,15 +14,14 @@ function Post() {
                     width: 400
                 }}
             >
-                <Typography variant="h4">Featured Post:</Typography>
-                <Typography>Juliette2233 - 3 mins ago</Typography>
+                <Typography>{post.dog ? post.dog.name : dog.name}</Typography>
                 <Box
                     component='img'
-                    src={Juliette}
+                    src={post.photo}
                     alt='Sample Photo'
                     height={400}
                 />
-                <Typography>Felt cute, might delete later</Typography>
+                <Typography>{post.post_text}</Typography>
             </Box>
         </div>
     )

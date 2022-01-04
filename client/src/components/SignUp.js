@@ -1,12 +1,11 @@
-import WelcomeHeader from "./WelcomeHeader";
-
 import { Box, Button, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function SignUp({currentUser, setCurrentUser}) {
+function SignUp({setUser}) {
     let navigate = useNavigate();
+
     const [signupUserInfo, setSignupUserInfo] = useState({
         first_name: '',
         last_name: '',
@@ -57,11 +56,10 @@ function SignUp({currentUser, setCurrentUser}) {
         .then(resp => resp.json())
         .then(data => {
             if (data.errors) {
-                console.log('Unprocessable entity!!! Please fix');
-                alert(`Something is invaild. Here are the errors: ${data.errors}`);
+                console.log(data);
             } else {
-                console.log('Sucessfully signed up, creating dog...');
-                setCurrentUser(data);
+                console.log(data);
+                setUser(data);
                 const dogFormData = new FormData();
                 dogFormData.append('user_id', data.id);
                 dogFormData.append('name', signupDogInfo.name);
@@ -78,18 +76,14 @@ function SignUp({currentUser, setCurrentUser}) {
                 .then(resp => resp.json())
                 .then(data => {
                     console.log(data);
-                    console.log('Sucessfully crreated dog, redirecting...');
                     navigate('/dashboard');
                 });
-
             }
         })
     }
 
-    console.log(signupDogInfo)
     return (
         <div className='SignUp'>
-            <WelcomeHeader />
             <Box
                 component={Paper}
                 elevation={6}
@@ -109,7 +103,6 @@ function SignUp({currentUser, setCurrentUser}) {
                     <Typography>Welcome to the future of dog social media!</Typography>
                     <Typography>First we need some info about you</Typography>
                     <TextField
-                        margin='normal'
                         required
                         label='First Name'
                         name='first_name'
@@ -117,7 +110,6 @@ function SignUp({currentUser, setCurrentUser}) {
                         onChange={handleSignupUserInfo}
                     />
                     <TextField
-                        margin='normal'
                         required
                         label='Last Name'
                         name='last_name'
@@ -125,7 +117,6 @@ function SignUp({currentUser, setCurrentUser}) {
                         onChange={handleSignupUserInfo}
                     />
                     <TextField
-                        margin='normal'
                         required
                         label='Username'
                         name='username'
@@ -133,7 +124,6 @@ function SignUp({currentUser, setCurrentUser}) {
                         onChange={handleSignupUserInfo}
                     />
                     <TextField
-                        margin='normal'
                         required
                         label='Email Address'
                         name='email'
@@ -141,7 +131,6 @@ function SignUp({currentUser, setCurrentUser}) {
                         onChange={handleSignupUserInfo}
                     />
                     <TextField
-                        margin='normal'
                         required
                         label='Password'
                         type='password'
@@ -150,7 +139,6 @@ function SignUp({currentUser, setCurrentUser}) {
                         onChange={handleSignupUserInfo}
                     />
                     <TextField
-                        margin='normal'
                         required
                         label='Confirm Password'
                         type='password'
@@ -165,7 +153,6 @@ function SignUp({currentUser, setCurrentUser}) {
                     />
                     <Typography>Now we need some info about your dog! If you have multiple dogs, you will be able to add another from your profile page after signup</Typography>
                     <TextField
-                        margin='normal'
                         required
                         label="Dog's Name"
                         name='name'
@@ -173,7 +160,6 @@ function SignUp({currentUser, setCurrentUser}) {
                         onChange={handleSignupDogInfo}
                     />
                     <TextField
-                        margin='normal'
                         required
                         label='Breed(s)'
                         name='breed'
@@ -184,7 +170,6 @@ function SignUp({currentUser, setCurrentUser}) {
                     <Select
                         labelId="sex-label"
                         id='sex'
-                        margin='normal'
                         label='Sex'
                         required
                         name='sex'
@@ -195,7 +180,6 @@ function SignUp({currentUser, setCurrentUser}) {
                         <MenuItem value='female'>Female</MenuItem>
                     </Select>
                     <TextField
-                        margin='normal'
                         required
                         label='Age'
                         name='age'
@@ -204,7 +188,6 @@ function SignUp({currentUser, setCurrentUser}) {
                         onChange={handleSignupDogInfo}
                     />
                     <TextField
-                        margin='normal'
                         required
                         label='Favorite Activity'
                         name='favorite_activity'
@@ -212,7 +195,6 @@ function SignUp({currentUser, setCurrentUser}) {
                         onChange={handleSignupDogInfo}
                     />
                     <TextField
-                        margin='normal'
                         required
                         label='Favorite Food'
                         name='favorite_food'
