@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 
 import Post from './Post';
 
-function Dashboard({user}) {
+function Dashboard({user, setDogToShow}) {
     const [friendDogsWithPosts, setFriendDogsWithPosts] = useState([]);
 
     useEffect(() => {
@@ -36,7 +36,7 @@ function Dashboard({user}) {
             flexDirection='column'
         >
             {friendDogsWithPosts.map(dog => {
-                return dog.posts.map(post => <Post key={post.post_text} post={post} dog={dog} user={user}/>)
+                return dog.posts.map(post => <Post key={post.post_text} post={post} dog={dog} user={user} setDogToShow={setDogToShow}/>)
             })}
         </Box>
     )

@@ -4,6 +4,7 @@ import CreatePost from "./CreatePost";
 
 import Dashboard from "./Dashboard";
 import DogProfile from "./DogProfile";
+import EditPost from "./EditPost";
 import Home from "./Home";
 import PersonProfile from "./PersonProfile";
 import SignUp from "./SignUp";
@@ -34,9 +35,9 @@ function App() {
         <Route path='/signup' element={<SignUp setUser={setUser} />} />
         {user ?
           <>
-            <Route path='/dashboard' element={<Dashboard user={user}/>} />
+            <Route path='/dashboard' element={<Dashboard user={user} setDogToShow={setDogToShow} />} />
             <Route path='/person-profile' element={<PersonProfile user={user} setDogToShow={setDogToShow} />} />
-            <Route path='/dog-profile' element={<DogProfile user={user} dogToShow={dogToShow} />} />
+            <Route path='/dog-profile' element={<DogProfile user={user} dogToShow={dogToShow} setDogToShow={setDogToShow} />} />
             <Route path='/post' element={<CreatePost user={user}/>} />
           </>
         :

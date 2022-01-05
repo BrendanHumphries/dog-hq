@@ -1,12 +1,25 @@
 import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useNavigate } from "react-router-dom";
+import {useState} from 'react';
 
-function Post({post, dog, user}) {
+function Post({post, dog, user, setDogToShow}) {
+    let navigate = useNavigate();
+
     function handlePostClick() {
+        let ownDog = false;
         if (user) {
-            console.log('there is a user logged in');
+            user.dogs.forEach(userDog => {
+                if (userDog.name === dog.name) {
+                    ownDog = true;
+                    console.log('navigate to editing component');
+                }
+            })
+            if (ownDog === false) {
+                setDogToShow(dog);
+                navigate('/dog-profile');
+            }
         } else {
-
         }
     }
 
