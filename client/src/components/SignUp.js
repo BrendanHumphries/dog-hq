@@ -88,7 +88,7 @@ function SignUp({setUser}) {
                 component={Paper}
                 elevation={6}
                 sx={{
-                    marginTop: 10,
+                    marginTop: 5,
                     maxWidth: 1000
                 }}
             >

@@ -57,10 +57,18 @@ function WelcomeHeader({user, setUser}) {
                     display: 'flex',
                     flexDirection: 'column',
                     padding: 2
+
                 }}
             >
-                <Button variant='contained' sx={{margin: 2}} onClick={() => navigate('/person-profile')}>Profile</Button>
-                <Button variant='contained' sx={{margin: 2}} onClick={handleLogout}>Log Out</Button>
+                {user ?
+                    <>
+                        <Button variant='contained' sx={{margin: 1}} onClick={() => navigate('/person-profile')}>Profile</Button>
+                        <Button variant='contained' sx={{margin: 1}} onClick={() => navigate('/post')}>New Post</Button>
+                        <Button variant='contained' sx={{margin: 1}} onClick={handleLogout}>Log Out</Button>
+                    </>
+                : 
+                    null
+                }
             </Box>
         </Box>
     )

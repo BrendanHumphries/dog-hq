@@ -1,7 +1,15 @@
 import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-function Post({post, dog}) {
+function Post({post, dog, user}) {
+    function handlePostClick() {
+        if (user) {
+            console.log('there is a user logged in');
+        } else {
+
+        }
+    }
+
     return (
         <div className="Post">
             <Box
@@ -13,6 +21,7 @@ function Post({post, dog}) {
                     padding: '10px',
                     width: 400
                 }}
+                onClick={handlePostClick}
             >
                 <Typography>{post.dog ? post.dog.name : dog.name}</Typography>
                 <Box

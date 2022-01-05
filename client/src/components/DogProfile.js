@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import DogCard from "./DogCard";
 import Post from './Post';
 
-function DogProfile({dogToShow}) {
+function DogProfile({dogToShow, user}) {
     const [posts, setPosts] = useState();
 
     useEffect(() => {
@@ -60,7 +60,7 @@ function DogProfile({dogToShow}) {
                     }}
                 >
                     <Typography variant="h4">{posts ? posts.length > 1 ? 'Posts' : 'Post' : null}</Typography>
-                    {posts ? posts.map(post => <Post post={post} dog={dogToShow}/>) : null}
+                    {posts ? posts.map(post => <Post key={post.post_text} post={post} dog={dogToShow} user={user}/>) : null}
                 </Box>
             </Grid>
         </Grid>

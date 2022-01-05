@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import Post from './Post';
 
-function Home({setUser}) {
+function Home({user, setUser}) {
     let navigate = useNavigate();
 
     const [randomPost, setRandomPost] = useState();
@@ -45,7 +45,6 @@ function Home({setUser}) {
                     password: ''
                 });
             } else {
-                console.log(data);
                 setUser(data);
                 navigate('/dashboard');
             }
@@ -80,7 +79,7 @@ function Home({setUser}) {
                         >
                             <Typography variant="h4">Featured Post:</Typography>
                         </Box>
-                        {randomPost ? <Post post={randomPost} /> : <Box component={Paper} elevation={6} sx={{bgcolor: '#abddff'}}><Typography variant="h4">Loading...</Typography></Box>}
+                        {randomPost ? <Post post={randomPost} user={user}/> : <Box component={Paper} elevation={6} sx={{bgcolor: '#abddff'}}><Typography variant="h4">Loading...</Typography></Box>}
                     </Box>
                 </Grid>
                 <Grid
