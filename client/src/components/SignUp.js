@@ -1,4 +1,4 @@
-import { Box, Button, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import { Box, Button, InputLabel, MenuItem, Paper, Select, TextField, Typography, FormControl } from "@mui/material";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -87,9 +87,10 @@ function SignUp({setUser}) {
             <Box
                 component={Paper}
                 elevation={6}
+                m='auto'
                 sx={{
                     marginTop: 5,
-                    maxWidth: 1000
+                    maxWidth: 900
                 }}
             >
                 <Box
@@ -103,6 +104,7 @@ function SignUp({setUser}) {
                     <Typography>Welcome to the future of dog social media!</Typography>
                     <Typography>First we need some info about you</Typography>
                     <TextField
+                        margin="normal"
                         required
                         label='First Name'
                         name='first_name'
@@ -110,6 +112,7 @@ function SignUp({setUser}) {
                         onChange={handleSignupUserInfo}
                     />
                     <TextField
+                        margin="normal"
                         required
                         label='Last Name'
                         name='last_name'
@@ -117,6 +120,7 @@ function SignUp({setUser}) {
                         onChange={handleSignupUserInfo}
                     />
                     <TextField
+                        margin="normal"
                         required
                         label='Username'
                         name='username'
@@ -124,6 +128,7 @@ function SignUp({setUser}) {
                         onChange={handleSignupUserInfo}
                     />
                     <TextField
+                        margin="normal"
                         required
                         label='Email Address'
                         name='email'
@@ -131,6 +136,7 @@ function SignUp({setUser}) {
                         onChange={handleSignupUserInfo}
                     />
                     <TextField
+                        margin="normal"
                         required
                         label='Password'
                         type='password'
@@ -139,6 +145,7 @@ function SignUp({setUser}) {
                         onChange={handleSignupUserInfo}
                     />
                     <TextField
+                        margin="normal"
                         required
                         label='Confirm Password'
                         type='password'
@@ -146,13 +153,16 @@ function SignUp({setUser}) {
                         value={signupUserInfo.password_confirmation}
                         onChange={handleSignupUserInfo}
                     />
+                    <Typography textAlign='left'>Please upload a profile photo of you</Typography>
                     <input
+                        margin="normal"
                         type='file'
                         accept='image/*'
                         onChange={(event) => setUserProfilePhoto(event.target.files[0])}
                     />
-                    <Typography>Now we need some info about your dog! If you have multiple dogs, you will be able to add another from your profile page after signup</Typography>
+                    <Typography sx={{marginTop: 1}}>Now we need some info about your dog!</Typography>
                     <TextField
+                        margin="normal"
                         required
                         label="Dog's Name"
                         name='name'
@@ -160,26 +170,33 @@ function SignUp({setUser}) {
                         onChange={handleSignupDogInfo}
                     />
                     <TextField
+                        margin="normal"
                         required
                         label='Breed(s)'
                         name='breed'
                         value={signupDogInfo.breed}
                         onChange={handleSignupDogInfo}
                     />
-                    <InputLabel id='sex-label'>Sex</InputLabel>
-                    <Select
-                        labelId="sex-label"
-                        id='sex'
-                        label='Sex'
-                        required
-                        name='sex'
-                        value={signupDogInfo.sex}
-                        onChange={handleSignupDogInfo}
-                    >
-                        <MenuItem value='male'>Male</MenuItem>
-                        <MenuItem value='female'>Female</MenuItem>
-                    </Select>
+                    <FormControl fullWidth>
+                        <InputLabel id="sex-select" sx={{marginTop: 1}}>Sex</InputLabel>
+                        <Select
+                            labelId="sex-select"
+                            required
+                            value={signupDogInfo.sex}
+                            label="Sex"
+                            name='sex'
+                            sx={{
+                                marginBottom: 1,
+                                marginTop: 1
+                            }}
+                            onChange={handleSignupDogInfo}
+                        >
+                            <MenuItem value='male'>Male</MenuItem>
+                            <MenuItem value='female'>Female</MenuItem>
+                        </Select>
+                    </FormControl>
                     <TextField
+                        margin="normal"
                         required
                         label='Age'
                         name='age'
@@ -188,6 +205,7 @@ function SignUp({setUser}) {
                         onChange={handleSignupDogInfo}
                     />
                     <TextField
+                        margin="normal"
                         required
                         label='Favorite Activity'
                         name='favorite_activity'
@@ -195,13 +213,16 @@ function SignUp({setUser}) {
                         onChange={handleSignupDogInfo}
                     />
                     <TextField
+                        margin="normal"
                         required
                         label='Favorite Food'
                         name='favorite_food'
                         value={signupDogInfo.favorite_food}
                         onChange={handleSignupDogInfo}
                     />
+                    <Typography textAlign='left'>Please upload a profile photo of your dog</Typography>
                     <input
+                        margin="normal"
                         type='file'
                         accept='image/*'
                         onChange={(event) => setDogProfilePhoto(event.target.files[0])}

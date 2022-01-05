@@ -4,7 +4,6 @@ import CreatePost from "./CreatePost";
 
 import Dashboard from "./Dashboard";
 import DogProfile from "./DogProfile";
-import EditPost from "./EditPost";
 import Home from "./Home";
 import PersonProfile from "./PersonProfile";
 import SignUp from "./SignUp";

@@ -14,7 +14,7 @@ function DogProfile({dogToShow, user, setDogToShow}) {
             console.log(data);
             setPosts(data.posts);
         });
-    }, [])
+    }, [dogToShow])
 
     return (
         <>
@@ -27,7 +27,12 @@ function DogProfile({dogToShow, user, setDogToShow}) {
                 marginTop: 5
             }}
         >
-            <Grid item component={Paper} elevation={6}>
+            <Grid
+                item
+                component={Paper}
+                elevation={6}
+                sx={{borderRadius: '12px'}}
+            >
                 <Box
                     textAlign='center'
                     padding='20px'
@@ -45,7 +50,12 @@ function DogProfile({dogToShow, user, setDogToShow}) {
                     <DogCard dog={dogToShow} />
                 </Box>
             </Grid>
-            <Grid item component={Paper} elevation={6}>
+            <Grid
+                item
+                component={Paper}
+                elevation={6}
+                sx={{borderRadius: '12px'}}
+            >
                 <Box
                     textAlign='center'
                     padding='20px'

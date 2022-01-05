@@ -59,7 +59,7 @@ function Home({user, setUser}) {
                 justifyContent='space-evenly'
                 alignItems='center'
                 sx={{
-                    marginTop: 20
+                    marginTop: 10
                 }}
             >
                 <Grid

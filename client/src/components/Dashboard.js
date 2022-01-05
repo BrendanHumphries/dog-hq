@@ -34,6 +34,7 @@ function Dashboard({user, setDogToShow}) {
             display='flex'
             alignItems='center'
             flexDirection='column'
+            textAlign='center'
         >
             {friendDogsWithPosts.map(dog => {
                 return dog.posts.map(post => <Post key={post.post_text} post={post} dog={dog} user={user} setDogToShow={setDogToShow}/>)

@@ -12,7 +12,12 @@ function PersonProfile({user, setDogToShow}) {
                 marginTop: 5
             }}
         >
-            <Grid item component={Paper} elevation={6}>
+            <Grid
+                item
+                component={Paper}
+                elevation={6}
+                sx={{borderRadius: '12px'}}
+            >
                 <Box
                     textAlign='center'
                     padding='20px'
@@ -38,7 +43,12 @@ function PersonProfile({user, setDogToShow}) {
                     <Typography variant='h6'>{user.email}</Typography>
                 </Box>
             </Grid>
-            <Grid item component={Paper} elevation={6}>
+            <Grid
+                item
+                component={Paper}
+                elevation={6}
+                sx={{borderRadius: '12px'}}
+            >
                 <Box
                     textAlign='center'
                     padding='20px'

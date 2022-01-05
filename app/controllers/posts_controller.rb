@@ -12,7 +12,9 @@ class PostsController < ApplicationController
     end
 
     def update
-        render json: Post.find(params[:id]).update!(post_params), status: :ok
+        post = Post.find(params[:id])
+        post.update!(post_params)
+        render json: post, status: :ok
     end
 
     def destroy

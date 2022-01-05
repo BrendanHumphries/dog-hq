@@ -1,4 +1,4 @@
-import { Button, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import { Button, InputLabel, MenuItem, Paper, Select, TextField, Typography, FormControl } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRef, useState } from "react";
 
@@ -63,6 +63,7 @@ function CreatePost({user}) {
                 >
                     <Typography variant='h4'>Create a post</Typography>
                     <TextField
+                        margin="normal"
                         required
                         label='Caption'
                         name='post_text'
@@ -70,30 +71,43 @@ function CreatePost({user}) {
                         onChange={handlePostData}
                     />
                     <TextField
+                        margin="normal"
                         required
                         label='Location'
                         name='location'
                         value={createPostData.location}
                         onChange={handlePostData}
                     />
-                    <Select
-                        label='Dog'
-                        required
-                        name='dog_id'
-                        value={createPostData.dog_id}
-                        onChange={handlePostData}
-                    >
-                        {user.dogs.map(dog => <MenuItem key={dog.name} value={dog.id}>{dog.name}</MenuItem>)}
-                    </Select>
+                    <FormControl fullWidth>
+                        <InputLabel id="dog-select" sx={{marginTop: 1}}>Dog</InputLabel>
+                        <Select
+                            labelId="dog-select"
+                            required
+                            value={createPostData.dog_id}
+                            label="Dog"
+                            sx={{
+                                marginBottom: 1,
+                                marginTop: 1
+                            }}
+                            onChange={handlePostData}
+                        >
+                            {user.dogs.map(dog => <MenuItem key={dog.name} value={dog.id}>{dog.name}</MenuItem>)}
+                        </Select>
+                    </FormControl>
+                    <Typography textAlign='left'>Please upload a photo for the post</Typography>
                     <input
                         ref={ref}
                         type='file'
                         accept='image/*'
                         onChange={(event) => setPostPhoto(event.target.files[0])}
+                        margin="normal"
                     />
                     <Button
                         type="submit"
                         variant="contained"
+                        sx={{
+                            marginTop: 1
+                        }}
                     >
                         Create Post
                     </Button>
